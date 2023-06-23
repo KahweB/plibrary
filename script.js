@@ -1,4 +1,5 @@
 let container = document.getElementById("container");
+let header = document.querySelector("header");
 let isPopupOpen = false;
 const body = document.getElementsByTagName("body");
 const newbook_Button = document.getElementById("newbook_button");
@@ -14,18 +15,30 @@ function Book(title, author, pages, read) {
 	this.pages = pages;
 	this.read = read;
 }
-function createCard(no) {
-	let card = document.createElement("div");
-	card.setAttribute("id", no);
-	card.setAttribute("class", "card");
-	container.appendChild(card);
-}
+//creates book cards
 function show() {
+	//delete cards before making new to prevent duplication
+	while (container.hasChildNodes()) {
+		container.removeChild(container.firstChild);
+	}
 	for (i = 0; i < myLibrary.length; i++) {
 		let book = myLibrary[i];
-		createCard(i);
+		let card = document.createElement("div");
+		card.setAttribute("class", "card");
+		let titleDiv = document.createElement("div");
+		let authorDiv = document.createElement("div");
+		let pagesDiv = document.createElement("div");
+		let readDiv = document.createElement("div");
+		titleDiv.innerHTML = book.title;
+		authorDiv.innerHTML = book.author;
+		pagesDiv.innerHTML = book.pages;
+		readDiv.innerHTML = book.read;
+		card.setAttribute("class", "card");
+		container.appendChild(card);
+		card.append(titleDiv, authorDiv, pagesDiv, readDiv);
 	}
 }
+
 function addBookToLibrary() {
 	let title = document.querySelector("#inputTitle").value;
 	let author = document.querySelector("#inputAuthor").value;
@@ -33,10 +46,10 @@ function addBookToLibrary() {
 	let read = document.querySelector("#inputRead").value;
 	let newBook = new Book(title, author, pages, read);
 	myLibrary.push(newBook);
-	console.log(myLibrary);
 }
-
+//creates popup
 function createPopup() {
+	//prevents multiple popups in DOM
 	if (isPopupOpen === false) {
 		isPopupOpen = true;
 
@@ -92,7 +105,7 @@ function createPopup() {
 			popupDiv.remove();
 		});
 
-		container.appendChild(popupDiv);
+		header.appendChild(popupDiv);
 		popupDiv.appendChild(form);
 		form.appendChild(labelTitle);
 		form.appendChild(inputTitle);
@@ -108,6 +121,7 @@ function createPopup() {
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
 			addBookToLibrary();
+
 			show();
 		});
 	} else {
