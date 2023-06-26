@@ -3,6 +3,7 @@ let header = document.querySelector("header");
 let isPopupOpen = false;
 const body = document.getElementsByTagName("body");
 const newbook_Button = document.getElementById("newbook_button");
+
 const form = document.querySelector("form");
 let myLibrary = [];
 //event listener top button
@@ -15,13 +16,13 @@ function Book(title, author, pages, read) {
 	this.pages = pages;
 	this.read = read;
 }
-//creates book cards
+//creates book cards/delete buttons/inside of cards
 function show() {
 	//delete cards before making new to prevent duplication
 	while (container.hasChildNodes()) {
 		container.removeChild(container.firstChild);
 	}
-	for (i = 0; i < myLibrary.length; i++) {
+	for (let i = 0; i < myLibrary.length; i++) {
 		let book = myLibrary[i];
 		let card = document.createElement("div");
 
@@ -29,6 +30,9 @@ function show() {
 		card.setAttribute("id", i);
 		// delete button:
 		let deleteBtn = document.createElement("button");
+		deleteBtn.setAttribute("class", "deleteBtn");
+		deleteBtn.setAttribute("name", i);
+
 		let titleDiv = document.createElement("div");
 		let authorDiv = document.createElement("div");
 		let pagesDiv = document.createElement("div");
@@ -38,9 +42,19 @@ function show() {
 		pagesDiv.innerHTML = book.pages;
 		readDiv.innerHTML = book.read;
 		card.setAttribute("class", "card");
-		card.appendChild(deleteBtn);
+
 		container.appendChild(card);
+		card.appendChild(deleteBtn);
 		card.append(titleDiv, authorDiv, pagesDiv, readDiv);
+		// !
+	}
+}
+function addEventDeleteBtn() {
+	let deleteBtn = document.querySelectorAll(".deleteBtn");
+	for (let i = 0; i < deleteBtn.length; i++) {
+		deleteBtn[i].addEventListener("click", (e) => {
+			console.log(e.target.name);
+		});
 	}
 }
 
@@ -127,6 +141,7 @@ function createPopup() {
 			addBookToLibrary();
 
 			show();
+			addEventDeleteBtn();
 		});
 	} else {
 		return;
