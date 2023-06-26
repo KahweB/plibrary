@@ -24,7 +24,11 @@ function show() {
 	for (i = 0; i < myLibrary.length; i++) {
 		let book = myLibrary[i];
 		let card = document.createElement("div");
+
 		card.setAttribute("class", "card");
+		card.setAttribute("id", i);
+		// delete button:
+		let deleteBtn = document.createElement("button");
 		let titleDiv = document.createElement("div");
 		let authorDiv = document.createElement("div");
 		let pagesDiv = document.createElement("div");
@@ -34,6 +38,7 @@ function show() {
 		pagesDiv.innerHTML = book.pages;
 		readDiv.innerHTML = book.read;
 		card.setAttribute("class", "card");
+		card.appendChild(deleteBtn);
 		container.appendChild(card);
 		card.append(titleDiv, authorDiv, pagesDiv, readDiv);
 	}
@@ -58,7 +63,6 @@ function createPopup() {
 
 		const form = document.createElement("form");
 		form.setAttribute("id", "bookForm");
-
 		const labelTitle = document.createElement("label");
 		labelTitle.setAttribute("for", "inputTitle");
 		labelTitle.innerHTML = "Title";
