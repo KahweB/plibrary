@@ -3,12 +3,10 @@ let header = document.querySelector("header");
 let isPopupOpen = false;
 const body = document.getElementsByTagName("body");
 const newbook_Button = document.getElementById("newbook_button");
-
 const form = document.querySelector("form");
 let myLibrary = [];
 //event listener top button
 newbook_Button.addEventListener("click", createPopup);
-
 //constructor
 function Book(title, author, pages, read) {
 	this.title = title;
@@ -46,14 +44,21 @@ function show() {
 		container.appendChild(card);
 		card.appendChild(deleteBtn);
 		card.append(titleDiv, authorDiv, pagesDiv, readDiv);
-		// !
 	}
 }
+/*TODO: 
+	addEventDeleteBtn() :
+	e.target.name hangi delete btn basildigina (number)
+	esdegeer cardi sil +
+	array sil +
+*/
 function addEventDeleteBtn() {
 	let deleteBtn = document.querySelectorAll(".deleteBtn");
 	for (let i = 0; i < deleteBtn.length; i++) {
 		deleteBtn[i].addEventListener("click", (e) => {
-			console.log(e.target.name);
+			let btnName = e.target.name;
+			document.getElementById(btnName).remove();
+			myLibrary.splice(btnName, 1);
 		});
 	}
 }
@@ -65,7 +70,10 @@ function addBookToLibrary() {
 	let read = document.querySelector("#inputRead").value;
 	let newBook = new Book(title, author, pages, read);
 	myLibrary.push(newBook);
+	document.querySelector("#popup").remove();
+	isPopupOpen = false;
 }
+
 //creates popup
 function createPopup() {
 	//prevents multiple popups in DOM
@@ -135,11 +143,9 @@ function createPopup() {
 		form.appendChild(inputRead);
 		form.appendChild(submitButton);
 		popupDiv.appendChild(closePopupButn);
-
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
 			addBookToLibrary();
-
 			show();
 			addEventDeleteBtn();
 		});
