@@ -130,13 +130,14 @@ function createPopup() {
 
 		const closePopupButn = document.createElement("button");
 		closePopupButn.setAttribute("id", "closePopup");
-		closePopupButn.innerHTML = "Close";
 
 		closePopupButn.addEventListener("click", function () {
 			isPopupOpen = false;
 			popupDiv.remove();
 		});
+
 		header.appendChild(popupDiv);
+
 		popupDiv.appendChild(form);
 		form.appendChild(labelTitle);
 		form.appendChild(inputTitle);
@@ -148,8 +149,9 @@ function createPopup() {
 		form.appendChild(inputRead);
 		inputRead.appendChild(optionNo);
 		inputRead.appendChild(optionYes);
-		form.appendChild(submitButton);
 		popupDiv.appendChild(closePopupButn);
+		form.appendChild(submitButton);
+
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
 			addBookToLibrary();
