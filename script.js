@@ -112,10 +112,16 @@ function createPopup() {
 		const labelRead = document.createElement("label");
 		labelRead.setAttribute("for", "inputRead");
 		labelRead.innerHTML = "Read?";
-		const inputRead = document.createElement("input");
+		const inputRead = document.createElement("select");
+		const optionYes = document.createElement("option");
+		optionYes.value = "yes";
+		optionYes.innerHTML = "yes";
+		const optionNo = document.createElement("option");
+		optionNo.value = "no";
+		optionNo.innerHTML = "no";
+		document.createElement("option").value = "no";
 		inputRead.setAttribute("name", "inputRead");
 		inputRead.setAttribute("id", "inputRead");
-		inputRead.setAttribute("type", "text");
 
 		const submitButton = document.createElement("button");
 		submitButton.setAttribute("id", "submitButton");
@@ -130,7 +136,6 @@ function createPopup() {
 			isPopupOpen = false;
 			popupDiv.remove();
 		});
-
 		header.appendChild(popupDiv);
 		popupDiv.appendChild(form);
 		form.appendChild(labelTitle);
@@ -141,6 +146,8 @@ function createPopup() {
 		form.appendChild(inputPages);
 		form.appendChild(labelRead);
 		form.appendChild(inputRead);
+		inputRead.appendChild(optionNo);
+		inputRead.appendChild(optionYes);
 		form.appendChild(submitButton);
 		popupDiv.appendChild(closePopupButn);
 		form.addEventListener("submit", (e) => {
@@ -148,6 +155,7 @@ function createPopup() {
 			addBookToLibrary();
 			show();
 			addEventDeleteBtn();
+			console.log(myLibrary);
 		});
 	} else {
 		return;
